@@ -1,21 +1,19 @@
 #RequireAdmin
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
-#AutoIt3Wrapper_Icon=Resources\star.ico
+#AutoIt3Wrapper_Icon=Resources\icon.ico
 #AutoIt3Wrapper_Outfile_x64=..\..\Builds\ImageCompletion\Join_Domain.exe
 #AutoIt3Wrapper_Compression=4
 #AutoIt3Wrapper_UseX64=y
-#AutoIt3Wrapper_Res_Description=PBSO Domain Join Tool
+#AutoIt3Wrapper_Res_Description=Domain Join Tool
 #AutoIt3Wrapper_Res_Fileversion=2.0.0.6
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=y
-#AutoIt3Wrapper_Res_ProductName=PBSO Domain Join Tool
+#AutoIt3Wrapper_Res_ProductName=Domain Join Tool
 #AutoIt3Wrapper_Res_ProductVersion=2.0.0.5
-#AutoIt3Wrapper_Res_CompanyName=Palm Beach County Sheriff's Office
-#AutoIt3Wrapper_Res_LegalCopyright=Copyright © 2019 Palm Beach County Sheriff's Office. All rights reserved.
+#AutoIt3Wrapper_Res_CompanyName=Ascanio.net
+#AutoIt3Wrapper_Res_LegalCopyright=Copyright © 2022 Ascanio.net. All rights reserved.
 #AutoIt3Wrapper_Res_SaveSource=y
 #AutoIt3Wrapper_Res_Language=1033
 #AutoIt3Wrapper_Res_requestedExecutionLevel=requireAdministrator
-#AutoIt3Wrapper_Run_After=ping 192.0.2.2 -n 1 -w 2000 > nul
-#AutoIt3Wrapper_Run_After=C:\Tools\sysinternals\signtool.exe sign /fd sha256 "%outx64%"
 #AutoIt3Wrapper_Run_Tidy=y
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 
@@ -62,7 +60,7 @@ AutoItSetOption("TrayMenuMode", 1) ; 0=append, 1=no default menu, 2=no automatic
 ; ================================================================================================================================
 
 ; Required Global Application Installation Variables
-Global $appPublisher = 'Palm Beach County Sheriffs Office' ;- Application Publisher (From Uninstall Key if Possible)
+Global $appPublisher = 'Ascanio.net' ;- Application Publisher (From Uninstall Key if Possible)
 Global $appDisplayName = 'Domain Join Utility' ;- Application Display Name (From Uninstall Key if Possible)
 Global $appShortName = 'Join_Domain' ;- Short Name for the application
 Global $appVersion = '2.0.0.0' ;- Application Version (From Uninstall Key if Possible)
@@ -131,7 +129,7 @@ Global $strOU, $intRetryCount = 5
 
 If $DebugMode = 1 Then LogIt($DEBUG, "Extracting resource files to " & $TempDir, "MAIN")
 FileInstall("C:\SourceControl\Programs\ImageCompletion\Resources\logo.png", $TempDir & '\', $FC_OVERWRITE)
-FileInstall("C:\SourceControl\Programs\ImageCompletion\Resources\star.ico", $TempDir & '\', $FC_OVERWRITE)
+FileInstall("C:\SourceControl\Programs\ImageCompletion\Resources\icon.ico", $TempDir & '\', $FC_OVERWRITE)
 
 If $DebugMode = 1 Then LogIt($DEBUG, "Declaring GUI variables.", "MAIN")
 Global $png = $TempDir & '\logo.png'
@@ -256,10 +254,6 @@ If @error Then
 	ExitScript($mainReturnCode)
 EndIf
 
-If StringInStr($strComputer, "MD", $STR_NOCASESENSE) And $strOU = "" Then
-	$strOU = "OU=Mobile Data Laptops,OU=Facilities,DC=pbso,DC=org"
-EndIf
-
 $lngReturnValue = $objComputer.JoinDomainOrWorkGroup($strDomain, $strPassword, $strDomainShort & "\" & $strUser, $strOU, $JOIN_DOMAIN + $ACCT_CREATE)
 If String($lngReturnValue) <> 0 Then
 	If $DebugMode = 1 Then LogIt($DEBUG, "First attempt to join the domain failed. Will try again up to a maximum of 5 additional tries.", "Main")
@@ -330,7 +324,7 @@ Func DisplayDomainJoinGUI()
 	WinMove($join_domain_prompt, "", (@DesktopWidth / 2) - ($apos[2] / 2), (@DesktopHeight / 2) - ($apos[3] / 2))
 
 	;- Define the GUI settings
-	GUISetIcon($TempDir & "\star.ico", -1)
+	GUISetIcon($TempDir & "\icon.ico", -1)
 	GUISetFont(10, 400, 0, "Segoe UI")
 	GUISetBkColor(0xFFFFFF)
 

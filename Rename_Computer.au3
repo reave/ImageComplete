@@ -1,16 +1,16 @@
 #RequireAdmin
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
-#AutoIt3Wrapper_Icon=Resources\star.ico
+#AutoIt3Wrapper_Icon=Resources\icon.ico
 #AutoIt3Wrapper_Outfile_x64=..\..\Builds\ImageCompletion\Rename_Computer_TimeoutTest.exe
 #AutoIt3Wrapper_Compression=4
 #AutoIt3Wrapper_UseX64=y
-#AutoIt3Wrapper_Res_Description=PBSO Computer Rename Tool
+#AutoIt3Wrapper_Res_Description=Computer Rename Tool
 #AutoIt3Wrapper_Res_Fileversion=2.0.0.27
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=y
 #AutoIt3Wrapper_Res_ProductName=Computer Rename Tool
 #AutoIt3Wrapper_Res_ProductVersion=2.0.0.8
-#AutoIt3Wrapper_Res_CompanyName=Palm Beach County Sheriff's Office
-#AutoIt3Wrapper_Res_LegalCopyright=Copyright © 2019 Palm Beach County Sheriff's Office. All rights reserved.
+#AutoIt3Wrapper_Res_CompanyName=Ascanio.net
+#AutoIt3Wrapper_Res_LegalCopyright=Copyright © 2022 Ascanio.net. All rights reserved.
 #AutoIt3Wrapper_Res_SaveSource=y
 #AutoIt3Wrapper_Res_Language=1033
 #AutoIt3Wrapper_Res_requestedExecutionLevel=requireAdministrator
@@ -24,7 +24,7 @@ AutoItSetOption("TrayAutoPause", 0) ; 0=no pause, 1=Pause
 AutoItSetOption("TrayIconHide", 0) ; 0=show, 1=hide tray icon
 AutoItSetOption("TrayMenuMode", 1) ; 0=append, 1=no default menu, 2=no automatic check, 4=menuitemID  not return
 
-Global $appPublisher = 'Palm Beach County Sheriffs Office' ;- Application Publisher (From Uninstall Key if Possible)
+Global $appPublisher = 'Ascanio.net' ;- Application Publisher (From Uninstall Key if Possible)
 Global $appDisplayName = 'Device Rename Prompter' ;- Application Display Name (From Uninstall Key if Possible)
 Global $appShortName = 'Rename_Computer' ;- Short Name for the application
 Global $appVersion = '2.0.0.0' ;- Application Version (From Uninstall Key if Possible)
@@ -50,7 +50,7 @@ LogIt($INFORMATION, "Preparing GUI and Starting countdown Timer.", "MAIN")
 
 If $DebugMode = 1 Then LogIt($DEBUG, "Extracting resource files to " & $TempDir, "MAIN")
 FileInstall("C:\SourceControl\Programs\ImageCompletion\Resources\logo.png", $TempDir & '\', $FC_OVERWRITE)
-FileInstall("C:\SourceControl\Programs\ImageCompletion\Resources\star.ico", $TempDir & '\', $FC_OVERWRITE)
+FileInstall("C:\SourceControl\Programs\ImageCompletion\Resources\icon.ico", $TempDir & '\', $FC_OVERWRITE)
 FileInstall("C:\SourceControl\Programs\ImageCompletion\Resources\CompleteImage.xml", $TempDir & '\', $FC_OVERWRITE)
 
 If $DebugMode = 1 Then LogIt($DEBUG, "Declaring GUI variables.", "MAIN")
@@ -82,7 +82,7 @@ Else
 
 		$Result = ConfigureImageComplete()
 		If $Result <> 1 Then
-			MsgBox($MB_SYSTEMMODAL, "Configuring the Image Completion Task failed.", "When the system reboots, please execute the ImageComplete.exe from C:\ProgramData\PBSO\Temp. This will complete the process.")
+			MsgBox($MB_SYSTEMMODAL, "Configuring the Image Completion Task failed.", "When the system reboots, please execute the ImageComplete.exe from C:\ProgramData\ImageComplete\Temp. This will complete the process.")
 		EndIf
 
 		RunWait(@ComSpec & ' /c shutdown /r /t 30 /c "This computer is about to restart to complete the rename process." /f')
@@ -116,9 +116,9 @@ WEnd
 If $mainReturnCode = 0 Then
 	$Result = ConfigureImageComplete()
 	If $Result <> 1 Then
-		MsgBox($MB_SYSTEMMODAL, "Configuring the Image Completion Task failed.", "When the system reboots, please execute the ImageComplete.exe from C:\ProgramData\PBSO\Temp. This will complete the process.")
+		MsgBox($MB_SYSTEMMODAL, "Configuring the Image Completion Task failed.", "When the system reboots, please execute the ImageComplete.exe from C:\ProgramData\ImageComplete\Temp. This will complete the process.")
 	EndIf
-	
+
 	RunWait(@ComSpec & ' /c shutdown /r /t 30 /c "This computer is about to restart to complete the rename process." /f')
 EndIf
 
@@ -129,7 +129,7 @@ ExitScript($mainReturnCode)
 	#FUNCTION# ===========================================================================================================
 	Name...........: _Check
 	Description ...: This function acts as a countdown clock
-	
+
 	Syntax.........: _Check()
 	Parameters ....: None
 
@@ -162,7 +162,7 @@ Func _Check()
 			$_Minutes = $_MinCalc
 			$_Seconds = $_SecCalc
 			GUICtrlSetData($timer, StringFormat("%02u" & ":" & "%02u", $_Minutes, $_Seconds))
-			
+
 			If $_Minutes = 0 And $_Seconds <= 20 Then
 				Beep(1200, 100)
 			EndIf
@@ -178,7 +178,7 @@ EndFunc   ;==>_Check
 	#FUNCTION# ===========================================================================================================
 	Name...........: DisplayGUI
 	Description ...: Displays the main device name prompter GUI
-	
+
 	Syntax.........: DisplayGUI()
 	Parameters ....: None
 
@@ -220,7 +220,7 @@ EndFunc   ;==>DisplayGUI
 	#FUNCTION# ===========================================================================================================
 	Name...........: submit
 	Description ...: Handles the execution of the main script logic once the submit button has been clicked
-	
+
 	Syntax.........: submit()
 	Parameters ....: None
 
@@ -269,9 +269,9 @@ Func submit()
 
 				$Result = ConfigureImageComplete()
 				If $Result <> 1 Then
-					MsgBox($MB_SYSTEMMODAL, "Configuring the Image Completion Task failed.", "When the system reboots, please execute the ImageComplete.exe from C:\ProgramData\PBSO\Temp. This will complete the process.")
+					MsgBox($MB_SYSTEMMODAL, "Configuring the Image Completion Task failed.", "When the system reboots, please execute the ImageComplete.exe from C:\ProgramData\ImageComplete\Temp. This will complete the process.")
 				EndIf
-				
+
 				RunWait(@ComSpec & ' /c shutdown /r /t 30 /c "This computer is about to restart to complete the rename process." /f')
 
 				;- Exit the Script
@@ -355,9 +355,9 @@ Func submit()
 
 			$Result = ConfigureImageComplete()
 			If $Result <> 1 Then
-				MsgBox($MB_SYSTEMMODAL, "Configuring the Image Completion Task failed.", "When the system reboots, please execute the ImageComplete.exe from C:\ProgramData\PBSO\Temp. This will complete the process.")
+				MsgBox($MB_SYSTEMMODAL, "Configuring the Image Completion Task failed.", "When the system reboots, please execute the ImageComplete.exe from C:\ProgramData\ImageComplete\Temp. This will complete the process.")
 			EndIf
-			
+
 			RunWait(@ComSpec & ' /c shutdown /r /t 30 /c "This computer is about to restart to complete the rename process." /f')
 
 			;- Exit the Script
@@ -437,9 +437,9 @@ Func _Timeout()
 
 		$Result = ConfigureImageComplete()
 		If $Result <> 1 Then
-			MsgBox($MB_SYSTEMMODAL, "Configuring the Image Completion Task failed.", "When the system reboots, please execute the ImageComplete.exe from C:\ProgramData\PBSO\Temp. This will complete the process.")
+			MsgBox($MB_SYSTEMMODAL, "Configuring the Image Completion Task failed.", "When the system reboots, please execute the ImageComplete.exe from C:\ProgramData\ImageComplete\Temp. This will complete the process.")
 		EndIf
-		
+
 		RunWait(@ComSpec & ' /c shutdown /r /t 30 /c "This computer is about to restart to complete the rename process." /f')
 
 		;- Exit the Script
@@ -501,7 +501,7 @@ EndFunc   ;==>_Timeout
 	#FUNCTION# ===========================================================================================================
 	Name...........: genRandomName
 	Description ...: Generate a random name
-	
+
 	Syntax.........: genRandomName()
 	Parameters ....: None
 
@@ -524,7 +524,7 @@ EndFunc   ;==>genRandomName
 	#FUNCTION# ===========================================================================================================
 	Name...........: RenameCompleteGUI
 	Description ...: Displays the GUI for the computer rename
-	
+
 	Syntax.........: RenameCompleteGUI()
 	Parameters ....: None
 
@@ -566,7 +566,7 @@ EndFunc   ;==>RenameCompleteGUI
 	#FUNCTION# ===========================================================================================================
 	Name...........: WMIService
 	Description ...: Makes a connection to WMI and stores it as an object
-	
+
 	Syntax.........: WMIService($host)
 	Parameters ....: $host - The device name to connect to in WMI
 
@@ -876,7 +876,7 @@ EndFunc   ;==>AutoRename
 Func ConfigureImageComplete()
 	Local $XML = $TempDir & '\CompleteImage.xml'
 	Local $Command = 'schtasks.exe /Create /XML "' & $XML & '" /TN CompleteImage'
-	
+
 	LogIt($INFORMATION, "Importing Scheduled Task", "ConfigureImageComplete")
 	$Result = RunWait(@ComSpec & ' /c ' & $Command)
 	If $Result <> 0 Then

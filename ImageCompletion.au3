@@ -1,22 +1,20 @@
 #RequireAdmin
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
-#AutoIt3Wrapper_Icon=Resources\star.ico
+#AutoIt3Wrapper_Icon=Resources\icon.ico
 #AutoIt3Wrapper_Outfile_x64=..\..\Builds\ImageCompletion\ImageCompletion.exe
 #AutoIt3Wrapper_Compression=4
 #AutoIt3Wrapper_UseX64=y
-#AutoIt3Wrapper_Res_Description=PBSO Image Completion
+#AutoIt3Wrapper_Res_Description=Image Complete
 #AutoIt3Wrapper_Res_Fileversion=4.0.0.115
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=y
-#AutoIt3Wrapper_Res_ProductName=PBSO Image Completion
+#AutoIt3Wrapper_Res_ProductName=Image Complete
 #AutoIt3Wrapper_Res_ProductVersion=4.0.0.113
-#AutoIt3Wrapper_Res_CompanyName=Palm Beach County Sheriff's Office
-#AutoIt3Wrapper_Res_LegalCopyright=Copyright © 2019 Palm Beach County Sheriff's Office. All rights reserved.
+#AutoIt3Wrapper_Res_CompanyName=Ascanio.net
+#AutoIt3Wrapper_Res_LegalCopyright=Copyright © 2022 Ascanio.net. All rights reserved.
 #AutoIt3Wrapper_Res_SaveSource=y
 #AutoIt3Wrapper_Res_Language=1033
 #AutoIt3Wrapper_Res_requestedExecutionLevel=requireAdministrator
 #AutoIt3Wrapper_Res_HiDpi=y
-#AutoIt3Wrapper_Run_After=ping 192.0.2.2 -n 1 -w 2000 > nul
-#AutoIt3Wrapper_Run_After=C:\Tools\sysinternals\signtool.exe sign /fd sha256 "%outx64%"
 #AutoIt3Wrapper_Run_Tidy=y
 #AutoIt3Wrapper_Tidy_Stop_OnError=n
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
@@ -30,7 +28,7 @@ AutoItSetOption("TrayMenuMode", 1)    ; 0=append, 1=no default menu, 2=no automa
 
 ; #VARIABLES# ====================================================================================================================
 ; Required Global Application Installation Variables
-Global $appPublisher = 'Palm Beach County Sheriffs Office'      ;- Application Publisher (From Uninstall Key if Possible)
+Global $appPublisher = 'Ascanio.net'      ;- Application Publisher (From Uninstall Key if Possible)
 Global $appDisplayName = 'Image Completion Tool'    ;- Application Display Name (From Uninstall Key if Possible)
 Global $appShortName = 'Image Completion Tool'      ;- Short Name for the application
 Global $appVersion = '4.0.0.0'        ;- Application Version (From Uninstall Key if Possible)
@@ -123,7 +121,7 @@ While $init = 0
 		EndIf
 
 		Global $png = $TempDir & '\logo.png'
-		Global $icon = $TempDir & '\star.ico'
+		Global $icon = $TempDir & '\icon.ico'
 	EndIf
 
 	;Defining Main Gui Globals
@@ -311,7 +309,7 @@ For $j = 1 To $ExecutionOrder[0][0] Step 1
 				SetStepProgress($Step, $Count, $StepTitle, Round(($Step / $Count) * 100))
 			EndIf
 		Next ;#> End Step Processing For Loop
-		
+
 		;- Set progress to 100% for completed actions
 		If $DebugMode = 1 Then LogIt($DEBUG, "Package complete. Setting percentage to 100% on current action.", "Main")
 		GUICtrlSetData($current_Progress, 100)
@@ -1261,7 +1259,7 @@ Func ExpandRequiredFiles()
 		If $DebugMode = 1 Then LogIt($DEBUG, "File failed to extract.", "ExpandRequiredFiles")
 		$Return = 0
 	EndIf
-	$Result = FileInstall("Resources\star.ico", $TempDir & '\', $FC_OVERWRITE)
+	$Result = FileInstall("Resources\icon.ico", $TempDir & '\', $FC_OVERWRITE)
 	If $Result = 1 Then
 		If $DebugMode = 1 Then LogIt($DEBUG, "File extracted successfully.", "ExpandRequiredFiles")
 	Else
@@ -1712,47 +1710,47 @@ Func CleanUpStagedFiles($Path)
 		LogIt($INFORMATION, "Successfully removed the scheduled task.", "CleanUpStagedFiles")
 		$Return = 0
 	EndIf
-	
-	Local $Result = RegDelete("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run", "PBSO_Finalize")
+
+	Local $Result = RegDelete("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run", "_Finalize")
 	If $Result = 1 Then
-		LogIt($INFORMATION, "PBSO Finalize removed from registry.", "CleanUpStagedFiles")
+		LogIt($INFORMATION, "_Finalize removed from registry.", "CleanUpStagedFiles")
 	ElseIf $Result = 0 Then
-		LogIt($WARNING, "The PBSO_Finalize key did not exist.", "CleanUpStagedFiles")
+		LogIt($WARNING, "The _Finalize key did not exist.", "CleanUpStagedFiles")
 	ElseIf $Result = 2 Then
 		Select
 			Case @error = 1
-				LogIt($ERROR, "Failed to remove PBSO_Finalize. Unabled to open requested key.", "CleanUpStagedFiles")
+				LogIt($ERROR, "Failed to remove _Finalize. Unabled to open requested key.", "CleanUpStagedFiles")
 			Case @error = 2
-				LogIt($ERROR, "Failed to remove PBSO_Finalize. Unabled to open requested main key.", "CleanUpStagedFiles")
+				LogIt($ERROR, "Failed to remove _Finalize. Unabled to open requested main key.", "CleanUpStagedFiles")
 			Case @error = 3
-				LogIt($ERROR, "Failed to remove PBSO_Finalize. to remote connect to the registry.", "CleanUpStagedFiles")
+				LogIt($ERROR, "Failed to remove _Finalize. to remote connect to the registry.", "CleanUpStagedFiles")
 			Case @error = -1
-				LogIt($ERROR, "Failed to remove PBSO_Finalize. Unable to delete requested value.", "CleanUpStagedFiles")
+				LogIt($ERROR, "Failed to remove _Finalize. Unable to delete requested value.", "CleanUpStagedFiles")
 			Case @error = -2
-				LogIt($ERROR, "Failed to remove PBSO_Finalize. Unabled to delete requested key/value.", "CleanUpStagedFiles")
+				LogIt($ERROR, "Failed to remove _Finalize. Unabled to delete requested key/value.", "CleanUpStagedFiles")
 		EndSelect
 
 		$Return = 0
 	EndIf
 
 	;- Remove Run Command from Registry
-	Local $Result = RegDelete("HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run", "PBSO_Finalize")
+	Local $Result = RegDelete("HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run", "_Finalize")
 	If $Result = 1 Then
-		LogIt($INFORMATION, "PBSO Finalize removed from registry.", "CleanUpStagedFiles")
+		LogIt($INFORMATION, "_Finalize removed from registry.", "CleanUpStagedFiles")
 	ElseIf $Result = 0 Then
-		LogIt($WARNING, "The PBSO_Finalize key did not exist.", "CleanUpStagedFiles")
+		LogIt($WARNING, "The _Finalize key did not exist.", "CleanUpStagedFiles")
 	ElseIf $Result = 2 Then
 		Select
 			Case @error = 1
-				LogIt($ERROR, "Failed to remove PBSO_Finalize. Unabled to open requested key.", "CleanUpStagedFiles")
+				LogIt($ERROR, "Failed to remove _Finalize. Unabled to open requested key.", "CleanUpStagedFiles")
 			Case @error = 2
-				LogIt($ERROR, "Failed to remove PBSO_Finalize. Unabled to open requested main key.", "CleanUpStagedFiles")
+				LogIt($ERROR, "Failed to remove _Finalize. Unabled to open requested main key.", "CleanUpStagedFiles")
 			Case @error = 3
-				LogIt($ERROR, "Failed to remove PBSO_Finalize. to remote connect to the registry.", "CleanUpStagedFiles")
+				LogIt($ERROR, "Failed to remove _Finalize. to remote connect to the registry.", "CleanUpStagedFiles")
 			Case @error = -1
-				LogIt($ERROR, "Failed to remove PBSO_Finalize. Unable to delete requested value.", "CleanUpStagedFiles")
+				LogIt($ERROR, "Failed to remove _Finalize. Unable to delete requested value.", "CleanUpStagedFiles")
 			Case @error = -2
-				LogIt($ERROR, "Failed to remove PBSO_Finalize. Unabled to delete requested key/value.", "CleanUpStagedFiles")
+				LogIt($ERROR, "Failed to remove _Finalize. Unabled to delete requested key/value.", "CleanUpStagedFiles")
 		EndSelect
 
 		$Return = 0
