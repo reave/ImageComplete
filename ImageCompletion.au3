@@ -1281,13 +1281,13 @@ EndFunc   ;==>ExpandRequiredFiles
 	=====================================================================================================================
 #comments-end   FUNCTION: DisplaySplashScreen
 Func DisplaySplashScreen()
-	$SplashScreen = GUICreate("Factory Image Tool", 442, 252, @DesktopWidth / 2.95, @DesktopHeight / 3.2, $WS_POPUP)
+	$SplashScreen = GUICreate("Image Complete Tool", 442, 252, @DesktopWidth / 2.95, @DesktopHeight / 3.2, $WS_POPUP)
 	GUISetBkColor(0x2b579a)     ;Word Blue
 
 	Local $apos = WinGetPos($SplashScreen)
 	WinMove($SplashScreen, "", (@DesktopWidth / 2) - ($apos[2] / 2), (@DesktopHeight / 2) - ($apos[3] / 2))
 
-	$Publisher = GUICtrlCreateLabel("Palm Beach County Sheriff's Office", 8, 8, 250, 21)
+	$Publisher = GUICtrlCreateLabel("Ascanio.net", 8, 8, 250, 21)
 	GUICtrlSetFont($Publisher, 10, 400, 0, "Segoe UI Light")
 	GUICtrlSetColor($Publisher, 0xFFFFFF)
 
